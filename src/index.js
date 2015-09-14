@@ -1,16 +1,21 @@
 require('./styles/styles.scss');
 import React from 'react/addons';
 import Root from './components/Root';
+import RegistrationForm from './components/RegistrationForm';
 
-var attachElement = document.getElementById('main');
-var initialName = "John Doe";
-var initialItems = [
-        {text : "Build First React App"}, 
-        {text : "Build One Yourself"},
-        {text : "Build A Better One"}
-];
+var Router = require('react-router');
+var DefaultRoute = Router.DefaultRoute;
+var Route = Router.Route;
 
-React.render(<Root name={initialName} items={initialItems} />, attachElement);
+var routes = (
+  <Route handler={Root}>
+    <Route name="registration-form" handler={RegistrationForm} />
+  </Route>
+);
+
+Router.run(routes, Router.HistoryLocation, function(Handler){
+    React.render(<Handler/>,  document.getElementById('main'));
+});
 
 // var appElement = React.createElement(Root, {name : initialName, items : initialItems});
 // React.render(appElement, attachElement);

@@ -1,14 +1,17 @@
 import React from "react/addons";
-import List from "./List";
+import RegistrationForm from "./RegistrationForm.js";
+var Router = require('react-router');
+
+var { Route, RouteHandler, Link } = Router;
 
 var Root = React.createClass({
-    mixins : [React.addons.PureRenderMixin],
+    //mixins : [React.addons.PureRenderMixin],
 
     render : function(){
-        
+
         return <div>
-            <h1>Hello {this.props.name}!</h1>
-            <List items={this.props.items}/>
+            <Link to="registration-form">Continue to user registration.</Link>
+            <RouteHandler/>
         </div>
     }
 });
