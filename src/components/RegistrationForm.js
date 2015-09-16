@@ -26,6 +26,7 @@ var RegistrationForm = React.createClass({
         //console.log(this.state.compState);
         this.setState({compState : this.state.compState+1});
         console.log(this.state.compState);
+        console.log(this.children);
     },
 
     render : function(){
