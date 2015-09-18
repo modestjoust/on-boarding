@@ -7,13 +7,42 @@ import StepFour from './steps/StepFour.js';
 var RegistrationForm = React.createClass({
     getInitialState: function() {
         return {compState: 0,
-                steps : [
-                  {name: 'StepOne', component: <StepOne/>},
-                  {name: 'StepTwo', component: <StepTwo/>},
-                  {name: 'StepThree', component: <StepThree/>},
-                  {name: 'StepFour', component: <StepFour/>}
-                ]
+                username: '',
+                password: '',
+                confirm: ''
               };
+    },
+
+    componentWillMount: function() {
+      this.setState({steps : [
+          {name: 'StepOne',
+            component: <StepOne
+            username={this.state.username}
+            usernameChange={this.handleUsernameChange}
+            password={this.state.password}
+            passwordChange={this.handlePasswordChange}
+            confirm={this.state.confirm}
+            confirmChange={this.handleConfirmChange}
+            />},
+          {name: 'StepTwo', component: <StepTwo/>},
+          {name: 'StepThree', component: <StepThree/>},
+          {name: 'StepFour', component: <StepFour/>}
+        ]})
+    },
+
+    handleUsernameChange: function(newValue) {
+        console.log(newValue);
+        this.setState({username: newValue});
+    },
+
+    handlePasswordChange: function(newValue) {
+        console.log(newValue);
+        this.setState({password: newValue});
+    },
+
+    handleConfirmChange: function(newValue) {
+        console.log(newValue);
+        this.setState({confirm: newValue});
     },
 
     handleKeyDown: function(evt) {
@@ -31,19 +60,55 @@ var RegistrationForm = React.createClass({
 
     render : function(){
 
-        return(
-          <div>
-            {this.state.steps[this.state.compState].component}
-            <input type='submit' value='Submit' onClick={this.handleClick}/>
-          </div>
-        );
-    }
+      switch (this.state.compState) {
+        case 0:
+          return(
+            <div>
+              <StepOne
+              username={this.state.username}
+              usernameChange={this.handleUsernameChange}
+              password={this.state.password}
+              passwordChange={this.handlePasswordChange}
+              confirm={this.state.confirm}
+              confirmChange={this.handleConfirmChange}
+              />
+              <input type='submit' value='Submit' onClick={this.handleClick}/>
+            </div>
+          );
+          break;
+        case 1:
+          return(
+            <div>
+              <StepTwo/>
+              <input type='submit' value='Submit' onClick={this.handleClick}/>
+            </div>
+          );
+          break;
+        case 2:
+          return(
+            <div>
+              <StepThree/>
+              <input type='submit' value='Submit' onClick={this.handleClick}/>
+            </div>
+          );
+          break;
+        case 3:
+          return(
+            <div>
+              <StepFour/>
+              <input type='submit' value='Submit' onClick={this.handleClick}/>
+            </div>
+          );
+          break;
+        }
+      }
 })
 
 export default RegistrationForm;
 
-
-
+//
+//{this.state.steps[this.state.compState].component}
+//
 
             /*
                 getInitialState: function() {

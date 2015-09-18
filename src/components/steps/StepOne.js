@@ -2,117 +2,144 @@ import React from "react";
 
 var StepOne = React.createClass({
     getInitialState: function() {
-        return {username: '',
-                password: '',
-                confirm: '',
-                usernameMessage: null,
-                passwordMessage: null,
-                confirmMessage: null,
-                goodUsername: false,
-                goodPassword: false
+        return {goodUsername: undefined,
+                goodPassword: undefined,
+                passwordsMatch: undefined
       };
     },
 
+    handleUsernameChange: function() {
+        var newValue = event.target.value;
+        this.props.usernameChange(newValue);
+    },
 
-    handleUsernameChange: function(event) {
-        this.setState({username: event.target.value});
+    handlePasswordChange: function() {
+        var newValue = event.target.value;
+        this.props.passwordChange(newValue);
     },
-    handlePasswordChange: function(event) {
-        this.setState({password: event.target.value});
+
+    handleConfirmChange: function() {
+        var newValue = event.target.value;
+        this.props.confirmChange(newValue);
     },
-    handleConfirmChange: function(event) {
-        this.setState({confirm: event.target.value});
-    },
+
     validateUsername: function(event) {
+        var test = /^\w+$/;
 
-        if (this.state.username.length >= 4 &&
-            this.state.username.length <= 16) {
-                var test = /^\w+$/;
-                if (test.test(this.state.username)) {
-                    console.log('match');
-                    ////
-                    //Todo: Check availability
-                    ////
-                    this.setState({usernameMessage: <div>This username is available!</div>})
-                    this.setState({goodUsername: true})
-                }
-                else {
-                    console.log('no match');
-                    this.setState({usernameMessage: <div>Invalid username.</div>})
-                    this.setState({goodUsername: false})
-                }
+        if (this.props.username.length >= 4 &&
+            this.props.username.length <= 16 &&
+            test.test(this.props.username)) {
+                //
+                //Todo: Check availability
+                ////
+                this.setState({goodUsername: true})
+                console.log('good username');
         }
         else {
-          console.log('bad string length');
-          this.setState({usernameMessage: <div>Username must be between 4 and 16 characters in length.</div>})
-          this.setState({goodUsername: false})
+                console.log('bad username');
+                this.setState({goodUsername: false})
         }
 
         return;
     },
-    validatePassword: function(event) {
 
-        if (this.state.password.length >= 4 &&
-            this.state.password.length <= 16) {
-                var test = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
-                if (test.test(this.state.password)) {
-                    console.log('good');
-                    this.setState({passwordMessage: <div>Looks good!</div>,
-                                    goodPassword: true})
-                }
-                else {
-                    console.log('not good');
-                    this.setState({passwordMessage: <div>Not good!</div>,
-                                    goodPassword: false})
-                }
+    validatePassword: function(event) {
+        var test = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
+
+        if (this.props.password.length >= 4 &&
+            this.props.password.length <= 16 &&
+            test.test(this.props.password)) {
+
+              console.log('good');
+              this.setState({goodPassword: true})
         }
         else {
-          console.log('bad password length');
-          this.setState({passwordMessage: <div>Password must be between 8 and 16 characters in length.</div>,
-                          goodPassword: false})
+              console.log('not good');
+              this.setState({goodPassword: false})
         }
+
         return;
     },
 
     confirmPassword: function(event) {
-        if (this.state.goodPassword && this.state.password === this.state.confirm) {
+        if (this.state.goodPassword && this.props.password === this.props.confirm) {
             console.log('passwords match')
-            this.setState({confirmMessage: <div>Its a match!</div>})
+            this.setState({passwordsMatch: true})
         }
         else {
           console.log('passwords do not match')
-          this.setState({confirmMessage: <div>No match...</div>})
+          this.setState({passwordsMatch: false})
         }
         return;
     },
 
+    clearUsernameMessage: function(event) {
+        this.setState({goodUsername: undefined});
+    },
+
+    clearPasswordMessage: function(event) {
+        this.setState({goodPassword: undefined});
+    },
+
+    clearConfirmMessage: function(event) {
+        this.setState({passwordsMatch: undefined});
+    },
+
     render : function(){
+        let usernameMessage, passwordMessage, confirmMessage;
+
+        if (this.state.goodUsername) {
+          usernameMessage = <div>Username is available!</div>
+        }
+        if (this.state.goodUsername === false) {
+          usernameMessage = <div>Invalid username.</div>
+        }
+
+        if (this.state.goodPassword) {
+          passwordMessage = <div>Looks good!</div>
+        }
+        if (this.state.goodPassword === false) {
+          passwordMessage = <div>Invalid password.</div>
+        }
+
+        if (this.state.passwordsMatch) {
+          confirmMessage = <div>They match!</div>
+        }
+        if (this.state.passwordsMatch === false) {
+          confirmMessage = <div>No match.</div>
+        }
 
         return(
           <div>
             <form>
+
             <h4>Username</h4>
             <input type='text' defaultValue='' placeholder='Username'
                 onChange={this.handleUsernameChange}
-                onBlur={this.validateUsername}/>
-            {this.state.usernameMessage}
+                onBlur={this.validateUsername}
+                onFocus={this.clearUsernameMessage}/>
+            {usernameMessage}
+
 
             <h4>Password:</h4>
             <input type='password' defaultValue='' placeholder='Password'
                 onChange={this.handlePasswordChange}
-                onBlur={this.validatePassword}/>
-            {this.state.passwordMessage}
+                onBlur={this.validatePassword}
+                onFocus={this.clearPasswordMessage}/>
+            {passwordMessage}
 
             <h4>Confirm password:</h4>
             <input type='password' defaultValue='' placeholder='Confirm Password'
                 onChange={this.handleConfirmChange}
-                onBlur={this.confirmPassword}/>
-            {this.state.confirmMessage}
+                onBlur={this.confirmPassword}
+                onFocus={this.clearConfirmMessage}/>
+            {confirmMessage}
+
             </form>
 
-            <p>Username: {this.state.username}</p>
-            <p>Password: {this.state.password}</p>
-            <p>Confirm: {this.state.confirm}</p>
+            <p>Username: {this.props.username}</p>
+            <p>Password: {this.props.password}</p>
+            <p>Confirm: {this.props.confirm}</p>
           </div>
         );
     }
