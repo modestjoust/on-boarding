@@ -85,6 +85,11 @@ var StepOne = React.createClass({
         this.setState({passwordsMatch: undefined});
     },
 
+    handleStepChange: function(event) {
+        var nextCompState = this.props.compState + 1;
+        this.props.handleStepChange(nextCompState)
+    },
+
     render : function(){
         let usernameMessage, passwordMessage, confirmMessage;
 
@@ -136,10 +141,7 @@ var StepOne = React.createClass({
             {confirmMessage}
 
             </form>
-
-            <p>Username: {this.props.username}</p>
-            <p>Password: {this.props.password}</p>
-            <p>Confirm: {this.props.confirm}</p>
+            <input type='submit' value='Submit' onClick={this.handleStepChange}/>
           </div>
         );
     }
