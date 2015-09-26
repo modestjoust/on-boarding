@@ -24,3 +24,23 @@ h1 {
 .isHovered {
     background-color: #7273b9;
 }
+.languageTable {
+    width: 100%;
+    table-layout: fixed;;
+
+    td {
+        width: 33%;
+        padding: 20px;
+        border-style: solid;
+        border-color: gray;
+    }
+}
+.languageTableWrapper {
+
+}
+.languageButton {
+    text-align: center;
+    border: solid 1px blue;
+    vertical-align: middle;
+
+}

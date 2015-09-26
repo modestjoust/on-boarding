@@ -38,7 +38,7 @@ var RegistrationForm = React.createClass({
                     russian: {name: 'Russian',
                         willTeach: false,
                         willLearn: false},
-                    signLanguage: {name: 'Sign Language',
+                    signlanguage: {name: 'Sign Language',
                         willTeach: false,
                         willLearn: false},
                     german: {name: 'German',
@@ -105,10 +105,25 @@ var RegistrationForm = React.createClass({
             this.setState({teachSelected: !teachSelected})
         }
     },
-    handleLanguageSelect: function(language, will) {
-        //var language = language;
-        //this.setState({languages.language.})
-        return;
+    handleLanguageSelect: function(language, learning) {
+        var languageKey = language.toLowerCase().replace(" ", "")
+        var learning = learning
+        var update = React.addons.update;
+        if (learning) {
+            var languages = update(this.state.languages, {
+                /*'english' would work here, but variable won't */
+                languageKey: {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
+                'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
+            });
+            this.setState({languages: languages})
+        }
+        else {
+            var languages = update(this.state.languages, {
+                languageKey: {willTeach: {$set: !this.state.languages[languageKey].willTeach}}
+                'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
+            });
+            this.setState({languages: languages})
+        }
     },
 /*
     handleKeyDown: function(evt) {
