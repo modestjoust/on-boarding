@@ -13,7 +13,9 @@ var RegistrationForm = React.createClass({
                 confirm: '',
                 learnSelected: false,
                 teachSelected: false,
-                languages: {
+                willTeach: [],
+                willLearn: []
+                /*languages: {
                     english: {name: 'English',
                         willTeach: false,
                         willLearn: false},
@@ -60,6 +62,7 @@ var RegistrationForm = React.createClass({
                         willTeach: false,
                         willLearn: false},
                 }
+                */
               };
     },
 
@@ -112,15 +115,15 @@ var RegistrationForm = React.createClass({
         if (learning) {
             var languages = update(this.state.languages, {
                 /*'english' would work here, but variable won't */
-                languageKey: {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
-                'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
+                //languageKey: {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
+                //'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
             });
             this.setState({languages: languages})
         }
         else {
             var languages = update(this.state.languages, {
-                languageKey: {willTeach: {$set: !this.state.languages[languageKey].willTeach}}
-                'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
+                //languageKey: {willTeach: {$set: !this.state.languages[languageKey].willTeach}}
+                //'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
             });
             this.setState({languages: languages})
         }
