@@ -1,5 +1,6 @@
 import React from 'react';
 import LanguageButton from './LanguageButton.js'
+import _ from 'lodash'
 
 
 var LanguageTable = React.createClass({
@@ -7,13 +8,20 @@ var LanguageTable = React.createClass({
         var languageKey = languageKey
         this.props.handleLanguageSelect(languageKey)
     },
+    checkIfLanguageSelected: function(language) {
+        if (this.props.learning) {
+            return _.includes(this.props.willLearn, language)
+        } else {
+            return _.includes(this.props.willTeach, language)
+        }
+    },
     populateTableRow: function(startIndex) {
         let tableRow = [];
         for (var i = startIndex; i < startIndex + 3; i++) {
             tableRow.push(<LanguageButton language={this.props.languages[i]}
                             languageKey={i}
                             languages={this.props.languages}
-                            isSelected={this.props.languagesSelected[i]}
+                            isSelected={this.checkIfLanguageSelected(this.props.languages[i])}
                             learning={this.props.learning}
                             handleLanguageSelect={this.handleLanguageSelect}/>)
         }

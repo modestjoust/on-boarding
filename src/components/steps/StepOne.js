@@ -1,12 +1,24 @@
 import React from "react";
 
 var StepOne = React.createClass({
-    getInitialState: function() {
-        return {goodUsername: undefined,
-                goodPassword: undefined,
-                passwordsMatch: undefined
-      };
-    },
+
+   getInitialState: function() {
+       //Probably not the best way to do this, but assuming the only way that
+       //the user can get to step 2 is with all fields valid, then when returning
+       //to step 1, if username is populated, then all fields were valid
+       //and we can set the initial state (valid fields) to all true. Otherwise
+       //it is the user's first visit to step 1
+       if (this.props.username.length > 0) {
+           return {goodUsername: true,
+                   goodPassword: true,
+                   passwordsMatch: true};
+       } else {
+           return {goodUsername: undefined,
+                   goodPassword: undefined,
+                   passwordsMatch: undefined
+           };
+       }
+   },
 
     handleUsernameChange: function() {
         var newValue = event.target.value;
@@ -29,7 +41,7 @@ var StepOne = React.createClass({
         if (this.props.username.length >= 4 &&
             this.props.username.length <= 16 &&
             test.test(this.props.username)) {
-                //
+                ////
                 //Todo: Check availability
                 ////
                 this.setState({goodUsername: true})
@@ -86,11 +98,20 @@ var StepOne = React.createClass({
     },
 
     handleStepChange: function(event) {
-        var nextCompState = this.props.compState + 1;
-        this.props.handleStepChange(nextCompState)
+        //uncomment to enable username/password checking
+        //if (this.state.goodUsername && this.state.goodPassword && this.state.passwordsMatch) {
+            var nextCompState = this.props.compState + 1;
+            this.props.handleStepChange(nextCompState)
+        //}
+
+        //////
+        //todo: error message describing why can't advance to next step (colors)
+        //////
     },
 
     render : function(){
+        console.log(this.state.goodUsername)
+
         let usernameMessage, passwordMessage, confirmMessage;
 
         if (this.state.goodUsername) {
@@ -119,7 +140,7 @@ var StepOne = React.createClass({
             <form>
 
             <h4>Username</h4>
-            <input type='text' defaultValue='' placeholder='Username'
+            <input type='text' defaultValue={this.props.username} placeholder='Username'
                 onChange={this.handleUsernameChange}
                 onBlur={this.validateUsername}
                 onFocus={this.clearUsernameMessage}/>
@@ -127,21 +148,21 @@ var StepOne = React.createClass({
 
 
             <h4>Password:</h4>
-            <input type='password' defaultValue='' placeholder='Password'
+            <input type='password' defaultValue={this.props.password} placeholder='Password'
                 onChange={this.handlePasswordChange}
                 onBlur={this.validatePassword}
                 onFocus={this.clearPasswordMessage}/>
             {passwordMessage}
 
             <h4>Confirm password:</h4>
-            <input type='password' defaultValue='' placeholder='Confirm Password'
+            <input type='password' defaultValue={this.props.confirm} placeholder='Confirm Password'
                 onChange={this.handleConfirmChange}
                 onBlur={this.confirmPassword}
                 onFocus={this.clearConfirmMessage}/>
             {confirmMessage}
 
             </form>
-            <input type='submit' value='Submit' onClick={this.handleStepChange}/>
+            <input type='submit' value='Next' id='nextButton' onClick={this.handleStepChange}/>
           </div>
         );
     }

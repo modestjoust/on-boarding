@@ -7,14 +7,19 @@ var StepTwo = React.createClass({
     },
     handleStepChange: function(event) {
         var nextCompState = this.props.compState;
-        if (this.props.learnSelected)
-            nextCompState += 1;
-        else {
-            if (this.props.teachSelected)
-                nextCompState += 2;
+        if (event.target.id === 'nextButton') {
+            if (this.props.learnSelected)
+                nextCompState += 1;
             else {
-                //error: must make at least one selection
+                if (this.props.teachSelected)
+                    nextCompState += 2;
+                else {
+                    //error: must make at least one selection
+                }
             }
+        }
+        if (event.target.id === 'backButton') {
+            nextCompState -= 1;
         }
         this.props.handleStepChange(nextCompState);
     },
@@ -23,7 +28,8 @@ var StepTwo = React.createClass({
           <div>
             <ButtonOfIntent title={'learn'} isSelected={this.props.learnSelected} handleClick={this.handleIntentSelect}/>
             <ButtonOfIntent title={'teach'} isSelected={this.props.teachSelected} handleClick={this.handleIntentSelect}/>
-            <input type='submit' value='Submit' onClick={this.handleStepChange}/>
+            <input type='submit' value='Previous' id='backButton' onClick={this.handleStepChange}/>
+            <input type='submit' value='Next' id='nextButton' onClick={this.handleStepChange}/>
           </div>
         );
     }

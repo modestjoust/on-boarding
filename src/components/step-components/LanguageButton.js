@@ -2,6 +2,7 @@ import React from 'react';
 
 var LanguageButton = React.createClass({
     getInitialState: function() {
+
         return {
             isHovered: false
         }
@@ -15,7 +16,7 @@ var LanguageButton = React.createClass({
         this.setState({isHovered: false})
     },
     handleLanguageSelect: function(event) {
-        var language = event.target.title.toLowerCase().replace(" ", "")
+        //var language = event.target.title.toLowerCase().replace(" ", "")
         var languageKey = this.props.languageKey
         //this.props.handleLanguageSelect(language)
         this.props.handleLanguageSelect(languageKey)

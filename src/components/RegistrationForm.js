@@ -4,6 +4,7 @@ import StepTwo from './steps/StepTwo.js';
 import StepThree from './steps/StepThree.js';
 import StepFour from './steps/StepFour.js';
 import StepFive from './steps/StepFive.js';
+import StepSix from './steps/StepSix.js';
 
 var RegistrationForm = React.createClass({
     getInitialState: function() {
@@ -15,54 +16,7 @@ var RegistrationForm = React.createClass({
                 teachSelected: false,
                 willTeach: [],
                 willLearn: []
-                /*languages: {
-                    english: {name: 'English',
-                        willTeach: false,
-                        willLearn: false},
-                    czech: {name: 'Czech',
-                        willTeach: false,
-                        willLearn: false},
-                    spanish: {name: 'Spanish',
-                        willTeach: false,
-                        willLearn: false},
-                    mandarin: {name: 'Mandarin',
-                        willTeach: false,
-                        willLearn: false},
-                    slovenian: {name: 'Slovenian',
-                        willTeach: false,
-                        willLearn: false},
-                    latin: {name: 'Latin',
-                        willTeach: false,
-                        willLearn: false},
-                    french: {name: 'French',
-                        willTeach: false,
-                        willLearn: false},
-                    russian: {name: 'Russian',
-                        willTeach: false,
-                        willLearn: false},
-                    signlanguage: {name: 'Sign Language',
-                        willTeach: false,
-                        willLearn: false},
-                    german: {name: 'German',
-                        willTeach: false,
-                        willLearn: false},
-                    croatian: {name: 'Croatian',
-                        willTeach: false,
-                        willLearn: false},
-                    serbian: {name: 'Serbian',
-                        willTeach: false,
-                        willLearn: false},
-                    slovak: {name: 'Slovak',
-                        willTeach: false,
-                        willLearn: false},
-                    norwegian: {name: 'Norwegian',
-                        willTeach: false,
-                        willLearn: false},
-                    italian: {name: 'Italian',
-                        willTeach: false,
-                        willLearn: false},
-                }
-                */
+
               };
     },
 
@@ -109,23 +63,35 @@ var RegistrationForm = React.createClass({
         }
     },
     handleLanguageSelect: function(language, learning) {
-        var languageKey = language.toLowerCase().replace(" ", "")
+
         var learning = learning
-        var update = React.addons.update;
+        var language = language
+        var update = React.addons.update
         if (learning) {
-            var languages = update(this.state.languages, {
-                /*'english' would work here, but variable won't */
-                //languageKey: {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
-                //'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
-            });
-            this.setState({languages: languages})
+            if (_.contains(this.state.willLearn, language)) {
+                var index = this.state.willLearn.indexOf(language)
+                var willLearn = update(this.state.willLearn, {
+                    $splice: [[index, 1]]
+                });
+            } else {
+                var willLearn = update(this.state.willLearn, {
+                    $push: [language]
+                });
+            }
+            this.setState({willLearn: willLearn})
         }
         else {
-            var languages = update(this.state.languages, {
-                //languageKey: {willTeach: {$set: !this.state.languages[languageKey].willTeach}}
-                //'english': {willLearn: {$set: !this.state.languages[languageKey].willLearn}}
-            });
-            this.setState({languages: languages})
+            if (_.contains(this.state.willTeach, language)) {
+                var index = this.state.willTeach.indexOf(language)
+                var willTeach = update(this.state.willTeach, {
+                    $splice: [[index, 1]]
+                });
+            } else {
+                var willTeach = update(this.state.willTeach, {
+                    $push: [language]
+                });
+            }
+            this.setState({willTeach: willTeach})
         }
     },
 /*
@@ -179,6 +145,7 @@ var RegistrationForm = React.createClass({
               <StepThree languages={this.state.languages}
                 learnSelected={this.state.learnSelected}
                 teachSelected={this.state.teachSelected}
+                willLearn={this.state.willLearn}
                 handleLanguageSelect={this.handleLanguageSelect}
                 handleStepChange={this.handleStepChange}
                 compState={this.state.compState}/>
@@ -191,6 +158,7 @@ var RegistrationForm = React.createClass({
               <StepFour languages={this.state.languages}
                 learnSelected={this.state.learnSelected}
                 teachSelected={this.state.teachSelected}
+                willTeach={this.state.willTeach}
                 handleLanguageSelect={this.handleLanguageSelect}
                 handleStepChange={this.handleStepChange}
                 compState={this.state.compState}/>
@@ -200,7 +168,20 @@ var RegistrationForm = React.createClass({
          case 4:
             return(
                 <div className='registration-step'>
-                    <StepFive/>
+                    <StepFive username={this.state.username}
+                        password={this.state.password}
+                        willLearn={this.state.willLearn}
+                        willTeach={this.state.willTeach}
+                        handleStepChange={this.handleStepChange}
+                        compState={this.state.compState}
+                        />
+                </div>
+            );
+            break;
+        case 5:
+            return(
+                <div className='registration-step'>
+                    <StepSix/>
                 </div>
             )
         }
