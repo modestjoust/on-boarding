@@ -1,0 +1,49 @@
+h1 {
+    color:blue;
+}
+.step-navigator {
+    text-align: center;
+}
+.registration-step {
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 20px;
+    border-style: solid;
+    border-color: #c0bcd4;
+    text-align: center;
+}
+.button-of-intent {
+    border-style: solid;
+    border-color: #777777;
+    border-width: 1px;
+    padding: 20px 40px 20px 40px;
+    float: center;
+    margin: 20px 30% 20px 30%;
+    text-align: center;
+}
+.isSelected {
+    background-color: #9293b9;
+}
+.isHovered {
+    background-color: #7273b9;
+}
+.languageTable {
+    width: 100%;
+    table-layout: fixed;;
+
+    td {
+        width: 33%;
+        padding: 20px;
+        border-style: solid;
+        border-color: gray;
+    }
+}
+.languageTableWrapper {
+
+}
+.languageButton {
+    text-align: center;
+    border: solid 1px blue;
+    vertical-align: middle;
+
+}
