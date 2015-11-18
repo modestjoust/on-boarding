@@ -1,38 +1,39 @@
-import React from "react";
-import ButtonOfIntent from '../step-components/ButtonOfIntent.js';
+import React from "react"
+import ButtonOfIntent from '../step-components/ButtonOfIntent.js'
+import NextPrevButtons from '../navigator-components/NextPrevButtons'
 
 var StepTwo = React.createClass({
-    handleIntentSelect: function(intent) {
-        this.props.handleIntentSelect(intent)
-    },
-    handleStepChange: function(event) {
-        var nextCompState = this.props.compState;
-        if (event.target.id === 'nextButton') {
-            if (this.props.learnSelected)
-                nextCompState += 1;
-            else {
-                if (this.props.teachSelected)
-                    nextCompState += 2;
-                else {
-                    //error: must make at least one selection
-                }
-            }
-        }
-        if (event.target.id === 'backButton') {
-            nextCompState -= 1;
-        }
-        this.props.handleStepChange(nextCompState);
-    },
-    render : function(){
-        return(
-          <div>
-            <ButtonOfIntent title={'learn'} isSelected={this.props.learnSelected} handleClick={this.handleIntentSelect}/>
-            <ButtonOfIntent title={'teach'} isSelected={this.props.teachSelected} handleClick={this.handleIntentSelect}/>
-            <input type='submit' value='Previous' id='backButton' onClick={this.handleStepChange}/>
-            <input type='submit' value='Next' id='nextButton' onClick={this.handleStepChange}/>
-          </div>
-        );
+  render() {
+    return(
+      <div>
+        <ButtonOfIntent title={'learn'} isSelected={this.props.learnSelected} handleClick={this.handleIntentSelect}/>
+        <ButtonOfIntent title={'teach'} isSelected={this.props.teachSelected} handleClick={this.handleIntentSelect}/>
+        <NextPrevButtons handleStepChange={this.handleStepChange}/>
+      </div>
+    )
+  },
+  handleStepChange(movingForward) {
+    if (movingForward) {
+      if (this.props.learnSelected) {
+        console.log('learnSelected')
+        this.props.actions.changeStep(this.props.step + 1)
+      } else if (this.props.teachSelected) {
+        console.log('teachSelected')
+        this.props.actions.changeStep(this.props.step + 2)
+      } else {
+        console.log('nothing selected')
+        //print alert
+      }
     }
+    else {
+      this.props.actions.changeStep(this.props.step - 1)
+      return
+    }
+  },
+  handleIntentSelect(intent) {
+    console.log(intent)
+    this.props.actions.updateIntent(intent)
+  }
 })
 
 export default StepTwo;

@@ -1,35 +1,34 @@
 import * as types from '../constants/ActionTypes'
 
-// export const CHANGE_STEP = 'CHANGE_STEP'
-// export const USERNAME_UPDATE = 'USERNAME_UPDATE'
-// export const PASSWORD_UPDATE = 'PASSWORD_UPDATE'
-// export const CONFIRM_UPDATE = 'CONFIRM_UPDATE'
-
 export function changeStep(step) {
-  console.log('in action')
   return {
     type: types.CHANGE_STEP,
-    step
+    step: step
   }
 }
-export function usernameUpdate(username) {
-  console.log('in action')
+export function updateCredentials(username, password, confirm) {
   return {
-    type: types.USERNAME_UPDATE,
-    username
+    type: types.UPDATE_CREDENTIALS,
+    username: username,
+    password: password,
+    confirm: confirm
   }
 }
-export function passwordUpdate(password) {
-  console.log('in action')
+export function updateIntent(intent) {
   return {
-    type: types.PASSWORD_UPDATE,
-    password
+    type: types.UPDATE_INTENT,
+    intent: intent
   }
 }
-export function confirmUpdate(confirm) {
-  console.log('in action')
+export function updateWillLearn(language) {
   return {
-    type: types.CONFIRM_UPDATE,
-    confirm
+    type: types.UPDATE_WILL_LEARN,
+    language: language
+  }
+}
+export function updateWillTeach(language) {
+  return {
+    type: types.UPDATE_WILL_TEACH,
+    language: language
   }
 }

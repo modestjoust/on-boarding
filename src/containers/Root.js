@@ -6,20 +6,29 @@ import * as AllActions from '../actions/actions';
 import StepButton from '../components/navigator-components/StepButton'
 import StepNavigator from '../components/StepNavigator'
 import RegistrationForm from '../components/RegistrationForm'
+import store from '../index.js'
 
 
 class Root extends Component {
   handleClick(e) {
-    console.log('clicked ' + e.target.id)
+    //store.dispatch(AllActions.changeStep(10))
   }
   render() {
-    const { step, username, password, confirm, dispatch } = this.props;
+    const { step, username, password, confirm, learnSelected, teachSelected, willLearn, willTeach, dispatch } = this.props;
     const actions = bindActionCreators(AllActions, dispatch);
     //dispatch(actions.changeStep(2))
     return (
       <div>
         <StepNavigator actions={actions} />
-        <RegistrationForm username={username} password={password} confirm={confirm} step={step} actions={actions} />
+        <RegistrationForm username={username}
+          password={password}
+          confirm={confirm}
+          step={step}
+          learnSelected={learnSelected}
+          teachSelected={teachSelected}
+          willLearn={willLearn}
+          willTeach={willTeach}
+          actions={actions} />
       </div>
     )
   }

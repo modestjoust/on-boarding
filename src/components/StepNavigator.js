@@ -17,7 +17,7 @@ var StepNavigator = React.createClass({
     },
     handleClick(e) {
         console.log('clicky ' + e.target.id)
-        this.props.changeStep(e.target.id)
+        //this.props.changeStep(10)
     }
 });
 
