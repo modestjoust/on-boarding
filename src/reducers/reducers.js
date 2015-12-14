@@ -18,6 +18,7 @@ export default function stepReducer(state = initialState, action) {
   switch (action.type) {
 
     case types.CHANGE_STEP:
+      console.log(action.step)
       return Object.assign({}, state, {
             step: action.step
       })

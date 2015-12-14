@@ -21,14 +21,14 @@ var StepFive = React.createClass({
   },
   handleStepChange(movingForward) {
     if (movingForward) {
-      this.props.actions.changeStep(this.props.step + 1)
+      this.props.handleStepChange(this.props.step + 1)
     }
     else {
       if (this.props.teachSelected) {
-        this.props.actions.changeStep(this.props.step - 1)
+        this.props.handleStepChange(this.props.step - 1)
       }
       else {
-        this.props.actions.changeStep(this.props.step - 2)
+        this.props.handleStepChange(this.props.step - 2)
       }
     }
   }

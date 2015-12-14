@@ -4,7 +4,6 @@ import NextPrevButtons from '../navigator-components/NextPrevButtons'
 
 var StepThree = React.createClass({
   render : function(){
-    //var prompt;
     var numberLanguages = this.state.languages.length;
     return(
       <div>
@@ -34,17 +33,9 @@ var StepThree = React.createClass({
     this.state.learning ? this.props.actions.updateWillLearn(language) : this.props.actions.updateWillTeach(language)
   },
   handleStepChange(movingForward) {
-    if (movingForward) {
-      if (this.props.teachSelected) {
-        this.props.actions.changeStep(this.props.step + 1)
-      }
-      else {
-        this.props.actions.changeStep(this.props.step + 2)
-      }
-    }
-    else {
-      this.props.actions.changeStep(this.props.step - 1)
-    }
+    movingForward ?
+      this.props.handleStepChange(this.props.step + 1) :
+      this.props.handleStepChange(this.props.step - 1)
   }
 })
 

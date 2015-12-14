@@ -3,8 +3,7 @@ import LanguageTable from '../step-components/LanguageTable.js'
 import NextPrevButtons from '../navigator-components/NextPrevButtons'
 
 var StepFour = React.createClass({
-  render : function(){
-    //var prompt;
+  render : function() {
     var numberLanguages = this.state.languages.length;
     return(
       <div>
@@ -35,14 +34,14 @@ var StepFour = React.createClass({
   },
   handleStepChange(movingForward) {
     if (movingForward) {
-      this.props.actions.changeStep(this.props.step + 1)
+      this.props.handleStepChange(this.props.step + 1)
     }
     else {
       if (this.props.learnSelected) {
-        this.props.actions.changeStep(this.props.step - 1)
+        this.props.handleStepChange(this.props.step - 1)
       }
       else {
-        this.props.actions.changeStep(this.props.step - 2)
+        this.props.handleStepChange(this.props.step - 2)
       }
     }
   }

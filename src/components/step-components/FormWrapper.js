@@ -5,7 +5,7 @@ import ConfirmInput from './ConfirmInput'
 
 var FormWrapper = React.createClass({
   render() {
-    //let usernameMessage, passwordMessage, confirmMessage;
+
     let alerts = this.getAlerts()
     console.log(alerts)
 
@@ -31,38 +31,22 @@ var FormWrapper = React.createClass({
     )
   },
   getInitialState: function() {
-       //Probably not the best way to do this, but assuming the only way that
-       //the user can get to step 2 is with all fields valid, then when returning
-       //to step 1, if username is populated, then all fields were valid
-       //and we can set the initial state (valid fields) to all true. Otherwise
-       //it is the user's first visit to step 1
+       // Assuming the only way that the user can get to step 2 is with all
+       // fields valid, then when returning to step 1, if username is populated,
+       // then all fields were valid and we can set the initial state
+       // (valid fields) to all true. Otherwise it is the user's first visit
+       // to step 1
        if (this.props.username.length > 0) {
            return {
-            //  username: this.props.username,
-            //  password: this.props.password,
-            //  confirm: this.props.confirm,
              goodUsername: true,
              goodPassword: true,
              passwordsMatch: true
-            //  alerts: {
-            //    username: '',
-            //    password: '',
-            //    confirm: ''
-            //  }
-           };
+           }
        } else {
            return {
-            //  username: this.props.username,
-            //  password: this.props.password,
-            //  confirm: this.props.confirm,
              goodUsername: undefined,
              goodPassword: undefined,
              passwordsMatch: undefined
-            //  alerts: {
-            //    username: '',
-            //    password: '',
-            //    confirm: ''
-            //  }
            };
        }
    },

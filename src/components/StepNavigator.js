@@ -3,21 +3,22 @@ import StepButton from './navigator-components/StepButton'
 
 var StepNavigator = React.createClass({
     render() {
-      let stepButtons = []
-      for (var i = 1; i < 7; i++) {
-        stepButtons.push(
-          <StepButton key={i} id={i} actions={this.props.actions}/>
-        )
-      }
-        return (
-            <div>
-                {stepButtons}
-            </div>
-        )
+      console.log('availableSteps = ' + this.props.availableSteps)
+      var stepButtons = this.props.availableSteps.map( (step, i) => {
+        return <StepButton key={i} id={step}
+          handleStepChange={this.props.handleStepChange}
+          actions={this.props.actions}
+        />
+      })
+      console.log(stepButtons)
+      return (
+        <div>
+          {stepButtons}
+        </div>
+      )
     },
-    handleClick(e) {
-        console.log('clicky ' + e.target.id)
-        //this.props.changeStep(10)
+    handleStepChange(id) {
+      this.props.handleStepChange(id)
     }
 });
 

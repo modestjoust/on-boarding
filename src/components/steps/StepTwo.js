@@ -14,25 +14,17 @@ var StepTwo = React.createClass({
   },
   handleStepChange(movingForward) {
     if (movingForward) {
-      if (this.props.learnSelected) {
-        console.log('learnSelected')
-        this.props.actions.changeStep(this.props.step + 1)
-      } else if (this.props.teachSelected) {
-        console.log('teachSelected')
-        this.props.actions.changeStep(this.props.step + 2)
-      } else {
-        console.log('nothing selected')
-        //print alert
-      }
+      this.props.handleStepChange(this.props.step + 1)
     }
     else {
-      this.props.actions.changeStep(this.props.step - 1)
-      return
+      this.props.handleStepChange(this.props.step - 1)
     }
   },
   handleIntentSelect(intent) {
     console.log(intent)
     this.props.actions.updateIntent(intent)
+    intent === 'learn' ?
+      this.props.toggleStepAvailable(3) : this.props.toggleStepAvailable(4)
   }
 })
 

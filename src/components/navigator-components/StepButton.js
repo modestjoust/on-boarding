@@ -2,8 +2,7 @@ import React from 'react'
 
 var StepButton = React.createClass({
   handleClick() {
-    console.log(this.props.id)
-    this.props.actions.changeStep(this.props.id)
+    this.props.handleStepChange(this.props.id)
   },
   render() {
     let stepNumber = this.props.id
