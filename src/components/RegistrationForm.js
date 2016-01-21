@@ -9,8 +9,12 @@ import StepNavigator from '../components/StepNavigator'
 
 var _ = require('lodash')
 
-var RegistrationForm = React.createClass({
-    render : function() {
+class RegistrationForm extends React.Component{
+    constructor(props) {
+      super(props)
+      this.state = {availableSteps: [1]}
+    }
+    render() {
       let registrationStep = this.getRegistrationStep()
       let stepNavigator = <StepNavigator step={this.props.step}
                             availableSteps={this.state.availableSteps}
@@ -23,13 +27,13 @@ var RegistrationForm = React.createClass({
           {registrationStep}
         </div>
       )
-    },
-    getInitialState : function() {
-      return({
-        availableSteps: [1]
-      })
-    },
-    getRegistrationStep: function() {
+    }
+    // getInitialState() {
+    //   return({
+    //     availableSteps: [1]
+    //   })
+    // }
+    getRegistrationStep = () => {
       switch (this.props.step) {
           case 1:
               return (
@@ -100,10 +104,10 @@ var RegistrationForm = React.createClass({
                   <StepSix/>
               )
       }
-    },
-    handleStepChange : function(stepToGoTo) {
+    }
+    handleStepChange = (stepToGoTo) => {
       // Validate step change based on step we are in. Step changes backwards are
-      // allowed. Step changes forward have requirements. 
+      // allowed. Step changes forward have requirements.
       var validated = false;
       var stepToGoTo = stepToGoTo;
 
@@ -201,8 +205,8 @@ var RegistrationForm = React.createClass({
         this.props.actions.changeStep(stepToGoTo)
       }
 
-    },
-    toggleStepAvailable(step) {
+    }
+    toggleStepAvailable = (step) => {
       let temp = this.state.availableSteps;
       this.state.availableSteps.includes(step) ?
         temp = _.without(temp, step) : (
@@ -211,6 +215,6 @@ var RegistrationForm = React.createClass({
       )
       this.setState({availableSteps: temp})
     }
-})
+}
 
 export default RegistrationForm
